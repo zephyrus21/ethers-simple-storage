@@ -5,6 +5,7 @@
   "author": "zephyrus21 <pandey.piyus@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "deploy": "ts-node deploy.ts",
     "compile": "solcjs --abi --bin --include-path node_modules/ --base-path . SimpleStorage.sol"
   },
   "devDependencies": {

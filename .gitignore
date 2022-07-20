@@ -1,6 +1,7 @@
 node_modules
 .env
-SimpleStorage_sol_*
+*.abi
+*.bin
 .notes.md
 deploy.js
 .encryptedKey.json

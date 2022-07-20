@@ -1,0 +1,6 @@
+node_modules
+.env
+SimpleStorage_sol_*
+.notes.md
+deploy.js
+.encryptedKey.json

@@ -1,0 +1,13 @@
+{
+  "name": "ethers-simple-storage",
+  "version": "1.0.0",
+  "repository": "git@github.com:zephyrus21/ethers-simple-storage.git",
+  "author": "zephyrus21 <pandey.piyus@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node deploy.ts"
+  },
+  "devDependencies": {
+    "typescript": "^4.7.4"
+  }
+}

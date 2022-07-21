@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: MIT
-pragma solidity ^0.8.8;
+pragma solidity 0.8.9;
 
 contract SimpleStorage {
     uint256 favoriteNumber;
@@ -8,7 +8,6 @@ contract SimpleStorage {
         uint256 favoriteNumber;
         string name;
     }
-    // uint256[] public anArray;
 
     People[] public people;
 

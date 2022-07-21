@@ -1,38 +1,23 @@
-import "dotenv/config";
-import { ethers } from "ethers";
-("ethers");
-import * as fs from "fs-extra";
+import { ethers } from "hardhat";
 
-const main = async () => {
-  const provider = new ethers.providers.JsonRpcProvider(process.env.RPC_URL);
-  // const wallet = new ethers.Wallet(process.env.PRIVATE_KEY!, provider);
-  const encryptedJson = fs.readFileSync("./.encryptedKey.json", "utf-8");
-  let wallet = ethers.Wallet.fromEncryptedJsonSync(
-    encryptedJson,
-    process.env.PASSWORD!
-  );
-  wallet = wallet.connect(provider);
-  const abi = fs.readFileSync("./SimpleStorage_sol_SimpleStorage.abi", "utf8");
-  const bin = fs.readFileSync("./SimpleStorage_sol_SimpleStorage.bin", "utf8");
-  const contractFactory = new ethers.ContractFactory(abi, bin, wallet);
+async function main() {
+  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
+  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
+  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
 
-  console.log("Deploying contract...");
+  const lockedAmount = ethers.utils.parseEther("1");
 
-  const contract = await contractFactory.deploy();
-  const deploymentReceipt = await contract.deployTransaction.wait();
-  console.log(`Contract deployed to ${contract.address}`);
+  const Lock = await ethers.getContractFactory("Lock");
+  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
 
-  // Get Fav Number
-  const currentFavNumber = await contract.retrieve();
-  console.log(`Current fav number is ${currentFavNumber}`);
-  const transactionStore = await contract.store("21");
-  const updatedFavNumber = await contract.retrieve();
-  console.log(`Updated fav number is ${updatedFavNumber}`);
-};
+  await lock.deployed();
 
-main()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error(error);
-    process.exit(1);
-  });
+  console.log("Lock with 1 ETH deployed to:", lock.address);
+}
+
+// We recommend this pattern to be able to use async/await everywhere
+// and properly handle errors.
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});

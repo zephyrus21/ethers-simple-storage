@@ -9,11 +9,11 @@ const main = async () => {
   console.log("Contract deployed at:", simpleStorage.address);
 
   //? We only verify on a testnet!
-  if (network.config.chainId === 5 && process.env.ETHERSCAN_API_KEY) {
-    //$ 6 blocks is sort of a guess
-    await simpleStorage.deployTransaction.wait(6);
-    await verify(simpleStorage.address, []);
-  }
+  // if (network.config.chainId === 5 && process.env.ETHERSCAN_API_KEY) {
+  //   //$ 6 blocks is sort of a guess
+  //   await simpleStorage.deployTransaction.wait(6);
+  //   await verify(simpleStorage.address, []);
+  // }
 
   const currentValue = await simpleStorage.retrieve();
   console.log("Current value:", currentValue);
